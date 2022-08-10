@@ -36,7 +36,7 @@ export class CatsController {
   }
 
   @Patch(':id/toggle')
-  async toggle(@Param('id', ParseIntPipe) id: number) : Promise<boolean>{
-    return await this.catsService.toggle(id);
+  async toggle(@Param('id', ParseIntPipe) id: number) : Promise<{done:boolean}>{
+  return {done: await this.catsService.toggle(id)};
   }
 }

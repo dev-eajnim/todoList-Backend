@@ -23,9 +23,6 @@ export class CatsService {
   }
 
   findOne(id: number) {
-    // const findOptions: FindOneOptions<Cat> = {
-    //   where: { id }
-    // }
     return this.catRepository.findOne({ where: { id } });
   }
 
@@ -47,15 +44,13 @@ export class CatsService {
     // 가져온 캣에 done과 반대로 해서 저장 !true
     // 저장된 done상태를 리턴
     let cat = await this.catRepository.findOne({where: {id}})
-    if(cat.done){
-      cat = {
-        ...cat,
-        done:cat.done}
 
-      // this.catRepository.save(cat) // 엔티티가 들어가야 한다. 위에는 오브젝트
-      return cat.done
-    }else{
-      return !(cat.done)
-    }
+    cat = {
+          ...cat,
+          done:!cat.done}
+  
+    await this.catRepository.save(cat)
+    return cat.done
+
   }
 }
